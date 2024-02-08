@@ -8,11 +8,17 @@ export const Route = createLazyFileRoute('/meals')({
 });
 
 const testMeals = [
-  { id: 'f001', name: 'Spaghetti', ingredients: ['pasta', 'sauce'] },
+  {
+    id: 'f001',
+    name: 'Spaghetti',
+    ingredients: ['pasa,meat,sauce'],
+    reciepe: 'cook Pasta, fry meat and mix all with sauce. Enyoy!',
+  },
   {
     id: 'f002',
-    name: 'Polis Schabowy',
-    ingredients: ['pork', 'eggs', 'flour', 'breadcrumbs'],
+    name: 'Scrumbled Eggs',
+    ingredients: ['pasa,meat,sauce'],
+    reciepe: 'fry Eggs and cutted sausage on butter - Eat with bread',
   },
 ];
 

@@ -1,55 +1,57 @@
 import { useState } from 'react';
 import { Card } from './ui/card';
+import { Button } from './ui/button';
 
 const MealItem: React.FunctionComponent<{
-  name: String;
-  ingredients: String;
+  id: string;
+  name: string;
+  ingredients: string;
+  reciepe: string;
+  openedRecipe: string;
+  onExtend: (id: string) => void;
 }> = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const extendHandler = () => {
+    props.onExtend(props.id);
+  };
+
   return (
     <li>
       <Card className="p-[10px] my-[14px]">
         <div className="flex justify-between">
           <div>
-            <h3>{props.name}</h3>
+            <h3 className="text-[2rem] italic">{props.name}</h3>
             <p>{props.ingredients}</p>
           </div>
-          <div
-            className="cursor-pointer"
-            onClick={() => {
-              setIsOpen((state) => (state = !state));
-            }}
-          >
-            <i className="fa-solid fa-plus"></i>
+          <div className="cursor-pointer " onClick={extendHandler}>
+            <i className="fa-solid fa-plus hover:text-[gray]"></i>
           </div>
         </div>
-        {isOpen && (
-          <div>
-            <div>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                modi repudiandae harum illo sunt assumenda voluptatem amet
-                quisquam. Esse, minima.
-              </p>
+        {props.openedRecipe === props.id && (
+          <Card className="p-[14px] mt-[16px]">
+            <div className="p-[10px] bg-gray-50 rounded-[6px]">
+              <p>{props.reciepe}</p>
             </div>
-            <div>
-              <div
+            <div className="flex justify-center">
+              <Button
+                variant="outline"
+                className="mx-[10px] mt-[10px]"
                 onClick={() => {
                   console.log('edytuj');
                 }}
               >
                 <i className="fa-solid fa-pen-to-square"></i>
-              </div>
-              <div
-                className="recipe-modify-icon recipe-remover"
+              </Button>
+              <Button
+                variant="outline"
+                className="mx-[10px] mt-[10px]"
                 onClick={() => {
                   console.log('usuń');
                 }}
               >
                 <i className="fa-solid fa-trash"></i>
-              </div>
+              </Button>
             </div>
-          </div>
+          </Card>
         )}
       </Card>
     </li>
