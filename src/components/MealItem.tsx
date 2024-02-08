@@ -14,6 +14,13 @@ const MealItem: React.FunctionComponent<{
     props.onExtend(props.id);
   };
 
+  const deleteHandler = () => {
+    console.log('usuwam', props.id);
+  };
+  const editHandler = () => {
+    console.log('edytuję', props.id);
+  };
+
   return (
     <li>
       <Card className="p-[10px] my-[14px]">
@@ -35,18 +42,14 @@ const MealItem: React.FunctionComponent<{
               <Button
                 variant="outline"
                 className="mx-[10px] mt-[10px]"
-                onClick={() => {
-                  console.log('edytuj');
-                }}
+                onClick={editHandler}
               >
                 <i className="fa-solid fa-pen-to-square"></i>
               </Button>
               <Button
                 variant="outline"
                 className="mx-[10px] mt-[10px]"
-                onClick={() => {
-                  console.log('usuń');
-                }}
+                onClick={deleteHandler}
               >
                 <i className="fa-solid fa-trash"></i>
               </Button>
