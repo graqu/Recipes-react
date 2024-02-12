@@ -7,7 +7,7 @@ import Modal from '@/components/Modal';
 import AddMealForm from '@/components/AddMealForm';
 
 export const Route = createLazyFileRoute('/meals')({
-  component: Index,
+  component: Meals,
 });
 
 const testMeals = [
@@ -25,8 +25,7 @@ const testMeals = [
   },
 ];
 
-function Index() {
-  const [modalState, setModalState] = useState(true);
+function Meals() {
   const [mealsList, setMealsList] = useState(testMeals);
   const addModal = useRef();
 
@@ -48,10 +47,16 @@ function Index() {
     addModal.current.close();
   };
 
+  const removeMeal = (id) => {
+    const listCopy = mealsList;
+    const newList = listCopy.filter((meal) => meal.id !== id);
+    setMealsList(newList);
+  };
+
   return (
     <>
       <TheHeading>Your favorite recipes</TheHeading>
-      <MealsList mealsList={mealsList} />
+      <MealsList mealsList={mealsList} onRemove={removeMeal} />
       <Button
         className="text-[14px] py-[14px] w-full"
         onClick={() => {

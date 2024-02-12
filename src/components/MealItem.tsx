@@ -8,13 +8,14 @@ const MealItem: React.FunctionComponent<{
   reciepe: string;
   openedRecipe: string;
   onExtend: (id: string) => void;
+  onRemove: (id: string) => void;
 }> = (props) => {
   const extendHandler = () => {
     props.onExtend(props.id);
   };
 
   const deleteHandler = () => {
-    console.log('usuwam', props.id);
+    props.onRemove(props.id);
   };
   const editHandler = () => {
     console.log('edytuję', props.id);

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import MealItem from './MealItem';
 
 const MealsList: React.FunctionComponent<{
-  mealsList: any[];
+  mealsList: {}[];
+  onRemove: (id: string) => void;
 }> = (props) => {
   const [extendedID, setExtendedID] = useState('');
 
@@ -26,6 +27,7 @@ const MealsList: React.FunctionComponent<{
             openedRecipe={extendedID}
             onExtend={handleExtended}
             key={meal.id}
+            onRemove={(id) => props.onRemove(id)}
           />
         ))}
       </ul>
