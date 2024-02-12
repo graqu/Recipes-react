@@ -7,18 +7,18 @@ const AddMealForm: React.FunctionComponent<{ onAdd: (data: {}) => void }> = (
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues: {
-      title: 'meal',
-      description: 'unknown recipe',
+      title: '',
+      ingredients: '',
+      description: '',
     },
   });
 
-  const title = watch('title');
-
-  const submitHandler = (data) => {
+  const submitHandler = (data: {}) => {
+    reset();
     props.onAdd(data);
   };
 
@@ -28,25 +28,42 @@ const AddMealForm: React.FunctionComponent<{ onAdd: (data: {}) => void }> = (
         submitHandler(data);
       })}
     >
+      <label htmlFor="title">name:</label>
       <input
-        className="block border m-2"
+        className="block border mb-2"
         {...register('title', { required: 'this is required' })}
         placeholder="title"
       />
-      <p>{title}</p>
-      <p>{errors.title?.message}</p>
+      <p className="text-[tomato]">{errors.title?.message}</p>
+      <label htmlFor="ingredients">ingredients:</label>
       <input
-        className="block border m-2"
+        className="block border mb-2"
+        {...register('ingredients', {
+          required: 'this is required',
+          minLength: {
+            value: 3,
+            message: 'use more than 3 letters',
+          },
+          maxLength: 150,
+        })}
+        placeholder="ingredients"
+      />
+      <p className="text-[tomato]">{errors.ingredients?.message}</p>
+      <label htmlFor="description">reciepe:</label>
+      <textarea
+        className="block border mb-4 w-full"
         {...register('description', {
           required: 'this is required',
           minLength: {
             value: 4,
             message: 'that one needs more than 4 letters',
           },
+          maxLength: 250,
         })}
         placeholder="description"
+        rows={4}
       />
-      <p>{errors.description?.message}</p>
+      <p className="text-[tomato]">{errors.description?.message}</p>
       <Button type="submit">Send</Button>
     </form>
   );

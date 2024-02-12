@@ -31,14 +31,17 @@ function Index() {
   const addModal = useRef();
 
   const addMealHandler = (data) => {
-    const id = data.title + Math.floor(Math.random() * 999);
+    const id =
+      data.title +
+      Math.floor(Math.random() * 999) +
+      Math.floor(Math.random() * 9);
 
     setMealsList((prevState) => [
       ...prevState,
       {
         id: id,
         name: data.title,
-        ingredients: ['pasa,meat,sauce'],
+        ingredients: data.ingredients,
         reciepe: data.description,
       },
     ]);
@@ -58,6 +61,7 @@ function Index() {
         Add new
       </Button>
       <Modal ref={addModal}>
+        <TheHeading>Add new Meal</TheHeading>
         <AddMealForm onAdd={addMealHandler} />
       </Modal>
     </>

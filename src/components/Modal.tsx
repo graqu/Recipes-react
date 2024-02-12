@@ -12,7 +12,9 @@ const Modal: React.FunctionComponent = forwardRef((props, ref) => {
     <dialog className={styles.dialog} ref={ref}>
       <Card className="p-[20px]">
         {props.children}
-        <Button onClick={info}>close</Button>
+        <Button variant="destructive" onClick={info}>
+          close
+        </Button>
       </Card>
     </dialog>
   );
