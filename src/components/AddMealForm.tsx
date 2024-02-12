@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form';
+import { Button } from './ui/button';
 
-const AddMealForm = () => {
+const AddMealForm: React.FunctionComponent<{ onAdd: (data: {}) => void }> = (
+  props,
+) => {
   const {
     register,
     handleSubmit,
@@ -15,10 +18,14 @@ const AddMealForm = () => {
 
   const title = watch('title');
 
+  const submitHandler = (data) => {
+    props.onAdd(data);
+  };
+
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log(data);
+        submitHandler(data);
       })}
     >
       <input
@@ -40,7 +47,7 @@ const AddMealForm = () => {
         placeholder="description"
       />
       <p>{errors.description?.message}</p>
-      <input type="submit" />
+      <Button type="submit">Send</Button>
     </form>
   );
 };

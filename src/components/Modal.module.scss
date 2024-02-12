@@ -1,0 +1,6 @@
+.dialog {
+  background: none;
+  &::backdrop {
+    background: #0000006a;
+  }
+}
