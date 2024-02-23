@@ -5,8 +5,8 @@ import TheHeading from './TheHeading';
 import mealDataT from '@/models/formData';
 
 type TProps = {
-  onAdd: (data: {}) => void;
-  onEdit: (id: string, data: {}) => void;
+  onAdd: (data: mealDataT) => void;
+  onEdit: (id: string, data: mealDataT) => void;
   editMode: boolean;
   item: {
     id: string;
