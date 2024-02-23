@@ -3,12 +3,13 @@ import { Button } from './ui/button';
 
 const MealItem: React.FunctionComponent<{
   id: string;
-  name: string;
+  title: string;
   ingredients: string;
   reciepe: string;
   openedRecipe: string;
   onExtend: (id: string) => void;
   onRemove: (id: string) => void;
+  onEdit: (id: string) => void;
 }> = (props) => {
   const extendHandler = () => {
     props.onExtend(props.id);
@@ -18,7 +19,7 @@ const MealItem: React.FunctionComponent<{
     props.onRemove(props.id);
   };
   const editHandler = () => {
-    console.log('edytuję', props.id);
+    props.onEdit(props.id);
   };
 
   return (
@@ -26,7 +27,7 @@ const MealItem: React.FunctionComponent<{
       <Card className="p-[10px] my-[14px]">
         <div className="flex justify-between">
           <div>
-            <h3 className="text-[2rem] italic">{props.name}</h3>
+            <h3 className="text-[2rem] italic">{props.title}</h3>
             <p>{props.ingredients}</p>
           </div>
           <div className="cursor-pointer " onClick={extendHandler}>
