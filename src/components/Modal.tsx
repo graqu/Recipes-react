@@ -2,6 +2,7 @@ import { Card } from './ui/card';
 import styles from './Modal.module.scss';
 import { PropsWithChildren, ReactNode, forwardRef } from 'react';
 import { Button } from './ui/button';
+import { createPortal } from 'react-dom';
 
 type Tprops = {
   children: PropsWithChildren<ReactNode>;
@@ -14,7 +15,7 @@ const Modal = forwardRef<Ref, Tprops>((props, ref) => {
   const info = () => {
     ref.current.close();
   };
-  return (
+  return createPortal(
     <dialog className={styles.dialog} ref={ref}>
       <Card className="p-[20px]">
         {props.children}
@@ -25,7 +26,8 @@ const Modal = forwardRef<Ref, Tprops>((props, ref) => {
           close
         </Button>
       </Card>
-    </dialog>
+    </dialog>,
+    document.getElementById('modal')!,
   );
 });
 
