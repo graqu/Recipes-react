@@ -6,25 +6,11 @@ import { MutableRefObject, useRef, useState } from 'react';
 import Modal from '@/components/Modal';
 import AddMealForm from '@/components/AddMealForm';
 import mealDataT from '@/models/formData';
+import { testMeals } from '@/store/testMeals';
 
 export const Route = createLazyFileRoute('/meals')({
   component: Meals,
 });
-
-const testMeals = [
-  {
-    id: 'f001',
-    title: 'Spaghetti',
-    ingredients: 'pasa,meat,sauce',
-    reciepe: 'cook Pasta, fry meat and mix all with sauce. Enyoy!',
-  },
-  {
-    id: 'f002',
-    title: 'Scrumbled Eggs',
-    ingredients: 'eggs,butter',
-    reciepe: 'fry Eggs and cutted sausage on butter - Eat with bread',
-  },
-];
 
 function Meals() {
   const [mealsList, setMealsList] = useState(testMeals);
