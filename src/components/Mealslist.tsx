@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import MealItem from './MealItem';
 import { fullMealDataT } from '@/models/formData';
+import { MealsContext } from '@/store/MealsContext';
 
-const MealsList: React.FunctionComponent<{
-  mealsList: fullMealDataT[];
-  onRemove: (id: string) => void;
-  onEdit: (id: string) => void;
-}> = (props) => {
+const MealsList: React.FunctionComponent<{}> = () => {
   const [extendedID, setExtendedID] = useState('');
+
+  const {mealsList, removeHandler, editionHandler } =
+    useContext(MealsContext);
 
   const handleExtended = (id: string) => {
     if (id === extendedID) {
@@ -20,7 +20,7 @@ const MealsList: React.FunctionComponent<{
   return (
     <div>
       <ul>
-        {props.mealsList.map((meal) => (
+        {mealsList.map((meal: fullMealDataT) => (
           <MealItem
             id={meal.id}
             title={meal.title}
@@ -29,8 +29,8 @@ const MealsList: React.FunctionComponent<{
             openedRecipe={extendedID}
             onExtend={handleExtended}
             key={meal.id}
-            onRemove={(id) => props.onRemove(id)}
-            onEdit={(id) => props.onEdit(id)}
+            onRemove={(id) => removeHandler(id)}
+            onEdit={(id) => editionHandler(id)}
           />
         ))}
       </ul>

@@ -2,30 +2,16 @@ import { useForm } from 'react-hook-form';
 import { Button } from './ui/button';
 import TheHeading from './TheHeading';
 import mealDataT from '@/models/formData';
+import { MealsContext } from '@/store/MealsContext';
+import { useContext } from 'react';
 
-type TProps = {
-  onAdd: (data: mealDataT) => void;
-  onEdit: (id: string, data: mealDataT) => void;
-  editMode: boolean;
-  item: {
-    id: string;
-    title: string;
-    ingredients: string;
-    reciepe: string;
-  };
-};
+const AddMealForm: React.FunctionComponent<{}> = () => {
+  const { editionState, editionSubmitter, addHandler } =
+    useContext(MealsContext);
 
-const AddMealForm: React.FunctionComponent<TProps> = ({
-  onAdd,
-  onEdit,
-  editMode = false,
-  item = {
-    id: '',
-    title: '',
-    ingredients: '',
-    reciepe: '',
-  },
-}) => {
+  const item = editionState.item;
+  const editMode = editionState.active;
+
   const {
     register,
     handleSubmit,
@@ -46,9 +32,9 @@ const AddMealForm: React.FunctionComponent<TProps> = ({
 
   const submitHandler = (data: mealDataT) => {
     if (!editMode) {
-      onAdd(data);
+      addHandler(data);
     } else {
-      onEdit(item.id, data);
+      editionSubmitter(item.id, data);
     }
     reset();
   };
