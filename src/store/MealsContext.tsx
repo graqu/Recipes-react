@@ -1,7 +1,10 @@
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 import { testMeals } from './testMeals';
 import mealDataT from '@/models/formData';
 import { fullMealDataT } from '@/models/formData';
+import { LinkedInLogoIcon } from '@radix-ui/react-icons';
+import { log } from 'console';
+import { json } from 'stream/consumers';
 
 interface MealsContextType {
   mealsList: fullMealDataT[];
@@ -35,6 +38,7 @@ export const MealsContext = createContext<MealsContextType>({
 const MealsContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  let count = 0;
   const [mealsList, setMealsList] = useState(testMeals);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [editionState, setEditionState] = useState({
@@ -46,27 +50,44 @@ const MealsContextProvider: React.FC<{ children: ReactNode }> = ({
       reciepe: '',
     },
   });
+  useEffect(() => {
+    const storedMeals = localStorage.getItem('mealsList');
+    if (storedMeals) {
+      setMealsList(JSON.parse(storedMeals));
+      console.log(JSON.parse(storedMeals));
+    } else {
+      console.log('robimy listę od zera');
+    }
+  }, []);
 
-  const addMealHandler = (data: mealDataT) => {
+  const addMealHandler = async (data: mealDataT) => {
     const id =
       data.title +
       Math.floor(Math.random() * 999) +
       Math.floor(Math.random() * 9);
 
-    setMealsList((prevState) => [
-      ...prevState,
+    const newList = [
+      ...mealsList,
       {
         id: id,
         title: data.title,
         ingredients: data.ingredients,
         reciepe: data.reciepe,
       },
-    ]);
+    ];
+
+    setMealsList(newList);
+    updateLocalStorage(newList);
     setModalVisibility(false);
   };
   const closeModal = () => {
     resetState();
     setModalVisibility(false);
+  };
+
+  const updateLocalStorage = (newList: {}[]) => {
+    localStorage.setItem('mealsList', JSON.stringify(newList));
+    console.log('aktualizacja');
   };
 
   const editMeal = (id: string, data: mealDataT) => {
@@ -81,6 +102,7 @@ const MealsContextProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     setMealsList(newArr);
+    updateLocalStorage(newArr);
 
     resetState();
     setModalVisibility(false);
@@ -90,6 +112,7 @@ const MealsContextProvider: React.FC<{ children: ReactNode }> = ({
     const listCopy = mealsList;
     const newList = listCopy.filter((meal) => meal.id !== id);
     setMealsList(newList);
+    updateLocalStorage(newList);
   };
 
   const openEditionMode = (id: string) => {
