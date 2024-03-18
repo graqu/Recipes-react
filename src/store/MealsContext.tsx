@@ -1,21 +1,40 @@
-import { createContext, useState } from 'react';
+import { ReactNode, createContext, useState } from 'react';
 import { testMeals } from './testMeals';
 import mealDataT from '@/models/formData';
+import { fullMealDataT } from '@/models/formData';
 
-export const MealsContext = createContext({
+interface MealsContextType {
+  mealsList: fullMealDataT[];
+  addHandler?: (data: mealDataT) => void;
+  removeHandler?: (id: string) => void;
+  editionHandler?: (id: string) => void;
+  editionSubmitter?: (id: string, data: mealDataT) => void;
+  resetEditorState: () => void;
+  editionState: {
+    active?: boolean;
+    item?: mealDataT;
+  };
+  showModal?: boolean;
+  openModal?: () => void;
+  closeModal: () => void;
+}
+
+export const MealsContext = createContext<MealsContextType>({
   mealsList: [],
   addHandler: () => {},
   removeHandler: () => {},
   editionHandler: () => {},
   editionSubmitter: () => {},
   resetEditorState: () => {},
-  editionState: {},
+  editionState: { active: false },
   showModal: false,
   openModal: () => {},
   closeModal: () => {},
 });
 
-export default function MealsContextProvider({ children }) {
+const MealsContextProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [mealsList, setMealsList] = useState(testMeals);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [editionState, setEditionState] = useState({
@@ -121,4 +140,6 @@ export default function MealsContextProvider({ children }) {
   return (
     <MealsContext.Provider value={ctxValue}>{children}</MealsContext.Provider>
   );
-}
+};
+
+export default MealsContextProvider;
