@@ -11,7 +11,7 @@ function About() {
     <div className={styles.about}>
       <TheHeading>About app</TheHeading>
       <p>
-        This application is an improved version of a previous project initially
+        This application is an improved version of my previous project initially
         built with vanilla JavaScript &nbsp;
         <a
           href="https://github.com/graqu/Recipe_of_your_day"

@@ -4,6 +4,7 @@ import TheHeading from './TheHeading';
 import mealDataT from '@/models/formData';
 import { MealsContext } from '@/store/MealsContext';
 import { useContext } from 'react';
+import styles from './AddMealForm.module.scss'
 
 const AddMealForm: React.FunctionComponent<{}> = () => {
   const { editionState, editionSubmitter, addHandler } =
@@ -45,6 +46,7 @@ const AddMealForm: React.FunctionComponent<{}> = () => {
     <>
       <TheHeading>{!editState ? 'Add new Meal' : 'Edit Meal info'}</TheHeading>
       <form
+        className={styles.form}
         onSubmit={handleSubmit((data) => {
           submitHandler(data);
         })}
